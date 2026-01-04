@@ -73,5 +73,9 @@ def analyze():
         
 @main.route('/logs', methods=['GET'])
 def get_log():
-    logs = PredictionLog.query.order_by(PredictionLog.timestamp.desc()).limit(10).all()
-    return jsonify([log.todict() for log in logs]), 200
+    try:
+        logs = PredictionLog.query.order_by(PredictionLog.timestamp.desc()).limit(10).all()
+        all_logs = [{'id': log.id, 'text': log.original_text, 'vibes': log.vibes} for log in logs]
+        return jsonify(all_logs), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

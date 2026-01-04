@@ -9,10 +9,3 @@ class PredictionLog(db.Model):
     subjectivity = db.Column(db.Float, nullable=False)
     vibes = db.Column(db.String(30), nullable=False)
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    
-    def to_dict(self):
-        return{
-            'id' : self.id,
-            'text' : self.original_text,
-            'vibes' : self.vibes
-        }
